@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1d25d502f11e84f7f871626aa452dedd
+guid: 356cbe83c1610492d908984118ea05e2
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -136,22 +136,64 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 1_1
+      name: ui extra_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 126
-        width: 517
-        height: 72
+        x: 5
+        y: 408
+        width: 2340
+        height: 74
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7f09db5679dbc4557aaffc12d8a46a35
-      internalID: 1510476738
+      spriteID: 3c80ff280cb734c5fb958e5c5267aac2
+      internalID: -1823251119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui extra_4
+      rect:
+        serializedVersion: 2
+        x: 774
+        y: 301
+        width: 819
+        height: 54
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4a4e784a90dd4de1ab592337d9b415a
+      internalID: 898690345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ui extra_5
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 46
+        width: 2340
+        height: 188
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d58a506317f74227b71a0a745d6b0d3
+      internalID: 1935556061
       vertices: []
       indices: 
       edges: []
@@ -167,13 +209,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      1_0: 711458751
-      1_1: 1510476738
-      1_2: -1618717539
-      1_3: 660485299
-      1_4: -1123676314
-      1_5: -1462527241
-      1_6: 2091519791
+      ui extra_0: -1823251119
+      ui extra_1: -179588186
+      ui extra_2: -1809653332
+      ui extra_3: 554446086
+      ui extra_4: 898690345
+      ui extra_5: 1935556061
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

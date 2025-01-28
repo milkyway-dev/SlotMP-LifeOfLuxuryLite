@@ -44,7 +44,7 @@ public class ButtonAnimator : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 
     void PressedAnimation(Transform transform)
     {
-        transform.DOScale(0.8f, 0.2f); // Scale down on press.
+        transform.DOScale(0.95f, 0.2f); // Scale down on press.
     }
 
     void OnClickedAnimation(Transform transform)
