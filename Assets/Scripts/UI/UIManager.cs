@@ -1,22 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.Networking;
-using Unity.VisualScripting;
 
 public class UIManager : MonoBehaviour
 {
-    [Header("Settings UI")]
-    [SerializeField] private Button Paytable_Button;
-
-    [Header("Popus UI")]
+    [Header("Main Popus UI Object")]
     [SerializeField] private GameObject MainPopup_Object;
 
-    [Header("Paytable Popup")]
+    [Header("Paytable Popup UI References")]
     [SerializeField] private GameObject[] Pages;
+    [SerializeField] private Button Paytable_Button;
     [SerializeField] private GameObject PaytablePopup_Object;
     [SerializeField] private Button PaytableExit_Button;
     [SerializeField] private Button PaytableLeft_Button;
@@ -28,7 +22,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text Bonus_Text;
     [SerializeField] private TMP_Text Wild_Text;
 
-    [Header("Sound/Music Ref")]
+    [Header("Sound/Music UI References")]
     [SerializeField] private Button Sound_Button;
     [SerializeField] private Button Music_Button;
     [SerializeField] private Sprite SoundOff_Sprite;
@@ -36,56 +30,62 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Sprite MusicOff_Sprite;
     [SerializeField] private Sprite MusicOn_Sprite;
     
-    [Header("Win Popup")]
-    [SerializeField] private Sprite BigWin_Sprite;
-    [SerializeField] private Sprite HugeWin_Sprite;
-    [SerializeField] private Sprite MegaWin_Sprite;
-    [SerializeField] private Sprite Jackpot_Sprite;
-    [SerializeField] private Image Win_Image;
+    [Header("Win Popup UI References")]
+    [SerializeField] private Image BigWin_Image;
+    [SerializeField] private Image HugeWin_Image;
+    [SerializeField] private Image MegaWin_Image;
+    [SerializeField] private Image DoublePay_Image;
     [SerializeField] private GameObject WinPopup_Object;
+    [SerializeField] private Transform WinPopupParent;
     [SerializeField] private TMP_Text Win_Text;
     [SerializeField] private Button SkipWinAnimation;
+    private Image Win_Image;
 
-    [Header("FreeSpins Popup")]
+    [Header("FreeSpins Popup UI References")]
     [SerializeField] private GameObject FreeSpinPopup_Object;
     [SerializeField] private TMP_Text Free_Text;
 
-    [Header("Disconnection Popup")]
+    [Header("Disconnection Popup UI References")]
     [SerializeField] private Button CloseDisconnect_Button;
     [SerializeField] private GameObject DisconnectPopup_Object;
 
-    [Header("AnotherDevice Popup")]
+    [Header("AnotherDevice Popup UI References")]
     [SerializeField] private Button CloseAD_Button;
     [SerializeField] private GameObject ADPopup_Object;
 
-    [Header("LowBalance Popup")]
+    [Header("LowBalance Popup UI References")]
     [SerializeField] private Button LBExit_Button;
     [SerializeField] private GameObject LBPopup_Object;
 
-    [Header("Quit Popup")]
+    [Header("Quit Popup UI References")]
     [SerializeField] private GameObject QuitPopup_Object;
     [SerializeField] private Button YesQuit_Button;
     [SerializeField] private Button NoQuit_Button;
     [SerializeField] private Button CrossQuit_Button;
     [SerializeField] private Button GameExit_Button;
 
-    [Header("Script Ref")]
-    [SerializeField] private AudioController audioController;
-    [SerializeField] private SlotBehaviour slotManager;
-    [SerializeField] private SocketIOManager socketManager;
+    [Header("Managers")]
+    [SerializeField] private AudioController _audioController;
+    [SerializeField] private SlotBehaviour _slotBehaviour;
+    [SerializeField] private SocketIOManager _socketManager;
+
     private bool isMusic = true;
     private bool isSound = true;
     private bool isExit = false;
     private Tween WinPopupTextTween;
     private Tween ClosePopupTween;
+    private Tween WinTextScaleTween;
+    private Tween WinImageScaleTween;
+    
     internal int FreeSpins;
     private int paytablePageCounter;
+    
     private void Start()
     {
         isMusic = true;
         isSound = true;
 
-        if (audioController) audioController.ToggleMute(false);
+        if (_audioController) _audioController.ToggleMute(false);
 
         if (Paytable_Button) Paytable_Button.onClick.RemoveAllListeners();
         if (Paytable_Button) Paytable_Button.onClick.AddListener(delegate {OpenPatable();});
@@ -139,7 +139,7 @@ public class UIManager : MonoBehaviour
     }
 
     private void OpenPatable(){
-        audioController.PlayButtonAudio();
+        _audioController.PlayButtonAudio();
         foreach (GameObject gameObject in Pages)
         {
             gameObject.SetActive(false);
@@ -180,10 +180,11 @@ public class UIManager : MonoBehaviour
         OpenPopup(LBPopup_Object);
     }
 
-    internal void DisconnectionPopup(bool isReconnection)
+    internal void DisconnectionPopup()
     {
         if (!isExit)
         {
+            isExit=true;
             OpenPopup(DisconnectPopup_Object);
         }
     }
@@ -193,19 +194,18 @@ public class UIManager : MonoBehaviour
         switch(value)
         {
             case 1:
-                if (Win_Image) Win_Image.sprite = BigWin_Sprite;
+                Win_Image = BigWin_Image;
                 break;
             case 2:
-                if (Win_Image) Win_Image.sprite = HugeWin_Sprite;
+                Win_Image = HugeWin_Image;
                 break;
             case 3:
-                if (Win_Image) Win_Image.sprite = MegaWin_Sprite;
+                Win_Image = MegaWin_Image;
                 break;
             case 4:
-                if (Win_Image) Win_Image.sprite = Jackpot_Sprite;
+                Win_Image = DoublePay_Image;
                 break;
         }
-
         StartPopupAnim(amount);
     }
 
@@ -213,7 +213,7 @@ public class UIManager : MonoBehaviour
     {
         if (MainPopup_Object) MainPopup_Object.SetActive(false);
         if (FreeSpinPopup_Object) FreeSpinPopup_Object.SetActive(false);
-        slotManager.FreeSpin(spins);
+        _slotBehaviour.FreeSpin(spins);
     }
 
     internal void FreeSpinProcess(int spins)
@@ -239,25 +239,48 @@ public class UIManager : MonoBehaviour
         if(WinPopupTextTween!=null){
             WinPopupTextTween.Kill();
             WinPopupTextTween=null;
+            Win_Text.text=_socketManager.playerdata.currentWining.ToString("F3");
         }
-        ClosePopup(WinPopup_Object);
-        slotManager.CheckPopups = false;
+
+        if(WinImageScaleTween!=null){
+            WinImageScaleTween.Kill();
+            WinImageScaleTween=null;
+        }
+
+        if(WinTextScaleTween!=null){
+            WinTextScaleTween.Kill();
+            WinTextScaleTween=null;
+        }
+        EndPopupAnim();
     }
 
     private void StartPopupAnim(double amount)
     {
         double initAmount = 0;
+        WinPopupParent.localScale = Vector3.zero;
+
+        if (Win_Image) Win_Image.gameObject.SetActive(true);
         if (WinPopup_Object) WinPopup_Object.SetActive(true);
-        if (MainPopup_Object) MainPopup_Object.SetActive(true);
-        WinPopupTextTween = DOTween.To(() => initAmount, (val) => initAmount = val, amount, 5f).OnUpdate(() =>
+        WinImageScaleTween=WinPopupParent.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack);
+        WinPopupTextTween = DOTween.To(() => initAmount, (val) => initAmount = val, amount, 2f).OnUpdate(() =>
         {
             if (Win_Text) Win_Text.text = initAmount.ToString("F3");
         });
 
-        ClosePopupTween = DOVirtual.DelayedCall(6f, () =>
+        ClosePopupTween = DOVirtual.DelayedCall(4f, () =>
         {
-            ClosePopup(WinPopup_Object);
-            slotManager.CheckPopups = false;
+            SkipWin();
+        });
+    }
+
+    void EndPopupAnim(){
+        WinPopupParent.DOScale(Vector3.zero, 0.5f)
+        .SetEase(Ease.InBack)
+        .OnComplete(()=>{
+            if (Win_Image) Win_Image.gameObject.SetActive(false);
+            Win_Image=null;
+            if (WinPopup_Object) WinPopup_Object.SetActive(false);
+            _slotBehaviour._checkPopups=false;
         });
     }
 
@@ -266,7 +289,7 @@ public class UIManager : MonoBehaviour
         OpenPopup(ADPopup_Object); 
     }
 
-    internal void InitialiseUIData(string SupportUrl, string AbtImgUrl, string TermsUrl, string PrivacyUrl, Paylines symbolsText)
+    internal void InitialiseUIData(Paylines symbolsText)
     {
         PopulateSymbolsPayout(symbolsText);
     }
@@ -319,20 +342,20 @@ public class UIManager : MonoBehaviour
     private void CallOnExitFunction()
     {
         isExit = true;
-        audioController.PlayButtonAudio();
-        slotManager.CallCloseSocket();
+        _audioController.PlayButtonAudio();
+        _socketManager.CloseSocket();
     }
 
     private void OpenPopup(GameObject Popup)
     {
-        if (audioController) audioController.PlayButtonAudio();
+        if (_audioController) _audioController.PlayButtonAudio();
         if (Popup) Popup.SetActive(true);
         if (MainPopup_Object) MainPopup_Object.SetActive(true);
     }
 
     private void ClosePopup(GameObject Popup)
     {
-        if (audioController) audioController.PlayButtonAudio();
+        if (_audioController) _audioController.PlayButtonAudio();
         if (Popup) Popup.SetActive(false);
         if (!DisconnectPopup_Object.activeSelf) 
         {
@@ -345,20 +368,15 @@ public class UIManager : MonoBehaviour
         if (isMusic)
         {
             Music_Button.GetComponent<Image>().sprite=MusicOff_Sprite;
-            audioController.ToggleMute(false, "bg");
+            _audioController.ToggleMute(false, "bg");
             isMusic=false;
         }
         else
         {
             Music_Button.GetComponent<Image>().sprite=MusicOn_Sprite;
-            audioController.ToggleMute(true, "bg");
+            _audioController.ToggleMute(true, "bg");
             isMusic=true;
         }
-    }
-
-    private void UrlButtons(string url)
-    {
-        Application.OpenURL(url);
     }
 
     private void ToggleSound()
@@ -366,15 +384,15 @@ public class UIManager : MonoBehaviour
         if (isSound)
         {
             Sound_Button.GetComponent<Image>().sprite=SoundOff_Sprite;
-            if (audioController) audioController.ToggleMute(false,"button");
-            if (audioController) audioController.ToggleMute(false,"wl");
+            if (_audioController) _audioController.ToggleMute(false,"button");
+            if (_audioController) _audioController.ToggleMute(false,"wl");
             isSound=false;
         }
         else
         {
             Sound_Button.GetComponent<Image>().sprite=SoundOn_Sprite;
-            if(audioController) audioController.ToggleMute(true,"button");
-            if (audioController) audioController.ToggleMute(true,"wl");
+            if(_audioController) _audioController.ToggleMute(true,"button");
+            if (_audioController) _audioController.ToggleMute(true,"wl");
             isSound=true;
         }
     }

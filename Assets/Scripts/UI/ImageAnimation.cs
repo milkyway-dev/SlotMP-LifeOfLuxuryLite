@@ -10,50 +10,27 @@ public class ImageAnimation : MonoBehaviour
 		PLAYING,
 		PAUSED
 	}
-
-	public static ImageAnimation Instance;
-
-	public List<Sprite> textureArray;
-
-	public Image rendererDelegate;
-
-	public bool useSharedMaterial = true;
-
-	public bool doLoopAnimation = true;
+	[SerializeField] private List<Sprite> textureArray;
+	[SerializeField] private Image rendererDelegate;
+	[SerializeField] private bool useSharedMaterial = true;
+	[SerializeField] private bool doLoopAnimation = true;
 	[SerializeField] private bool StartOnAwake;
-
-	[HideInInspector]
-	public ImageState currentAnimationState;
-
+	[SerializeField] private float AnimationSpeed = 5f;
+	[SerializeField] private float delayBetweenLoop;
+	[HideInInspector] public ImageState currentAnimationState;
 	private int indexOfTexture;
-
 	private float idealFrameRate = 0.0416666679f;
-
 	private float delayBetweenAnimation;
-
-	public float AnimationSpeed = 5f;
-
-	public float delayBetweenLoop;
 
 	private void Awake()
 	{
-		if (Instance == null)
-		{
-			Instance = this;
-		}
 		if(StartOnAwake){
 			StartAnimation();
 		}
 	}
 
-	private void OnEnable()
-	{
-
-	}
-
 	private void OnDisable()
 	{
-		//rendererDelegate.sprite = textureArray[0];
 		StopAnimation();
 	}
 
@@ -75,7 +52,7 @@ public class ImageAnimation : MonoBehaviour
 		}
 	}
 
-	public void StartAnimation()
+	internal void StartAnimation()
 	{
 		indexOfTexture = 0;
 		if (currentAnimationState == ImageState.NONE)
@@ -87,7 +64,7 @@ public class ImageAnimation : MonoBehaviour
 		}
 	}
 
-	public void PauseAnimation()
+	internal void PauseAnimation()
 	{
 		if (currentAnimationState == ImageState.PLAYING)
 		{
@@ -96,7 +73,7 @@ public class ImageAnimation : MonoBehaviour
 		}
 	}
 
-	public void ResumeAnimation()
+	internal void ResumeAnimation()
 	{
 		if (currentAnimationState == ImageState.PAUSED && !IsInvoking("AnimationProcess"))
 		{
@@ -105,7 +82,7 @@ public class ImageAnimation : MonoBehaviour
 		}
 	}
 
-	public void StopAnimation()
+	internal void StopAnimation()
 	{
 		if (currentAnimationState != 0)
 		{
@@ -115,7 +92,7 @@ public class ImageAnimation : MonoBehaviour
 		}
 	}
 
-	public void RevertToInitialState()
+	private void RevertToInitialState()
 	{
 		indexOfTexture = 0;
 		SetTextureOfIndex();
