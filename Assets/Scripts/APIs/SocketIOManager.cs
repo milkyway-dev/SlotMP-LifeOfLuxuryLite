@@ -16,8 +16,8 @@ public class SocketIOManager : MonoBehaviour
     [SerializeField] private UIManager _uiManager;
     protected string SocketURI = null;
     protected string TestSocketURI = "http://localhost:5001/";
-    // protected string gameID = "SL-LLL";
-    protected string gameID = "";
+    protected string gameID = "SL-LLL";
+    // protected string gameID = "";
 
     private SocketManager manager;
     private const int maxReconnectionAttempts = 6;
@@ -203,7 +203,7 @@ public class SocketIOManager : MonoBehaviour
             {
                 this.manager.Socket.Emit(eventName);
             }
-        }   
+        }
         else
         {
             Debug.LogWarning("Socket is not connected.");
@@ -222,7 +222,7 @@ public class SocketIOManager : MonoBehaviour
 
         string id = myData.id;
 
-        switch(id)
+        switch (id)
         {
             case "InitData":
                 {
@@ -278,7 +278,7 @@ public class SocketIOManager : MonoBehaviour
         message.data.spins = 1;
         message.data.currentLines = 20;
         message.id = "SPIN";
-        
+
         string json = JsonConvert.SerializeObject(message); // Serialize message data to JSON
         SendDataWithNamespace("message", json);
     }

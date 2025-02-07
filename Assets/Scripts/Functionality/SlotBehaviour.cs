@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 using TMPro;
+using Best.SocketIO;
 
 public class SlotBehaviour : MonoBehaviour
 {
@@ -370,7 +371,7 @@ public class SlotBehaviour : MonoBehaviour
             yield return StopTweening(_slotTransforms[i], i, _stopSpinToggle);
         }
         _stopSpinToggle = false;
-
+        if (_audioController) _audioController.StopWLAaudio();
         yield return _alltweens[^1].WaitForCompletion();
         KillAllTweens();
         shuffleSlotImages(true);
@@ -515,6 +516,14 @@ public class SlotBehaviour : MonoBehaviour
         else
         {
             _checkPopups = false;
+        }
+    }
+
+    void CheckWinAudio()
+    {
+        if (_socketManager.playerdata.currentWining > 0 && _socketManager.playerdata.currentWining < _currentTotalBet * 5 && !_socketManager.resultData.isDouble)
+        {
+            _audioController.PlayWLAudio("win");
         }
     }
 

@@ -221,6 +221,7 @@ public class UIManager : MonoBehaviour
                 Win_Image = DoublePay_Image;
                 break;
         }
+        _audioController.PlayWLAudio("megaWin");
         StartPopupAnim(amount);
     }
 
@@ -395,13 +396,13 @@ public class UIManager : MonoBehaviour
         if (isMusic)
         {
             Music_Button.GetComponent<Image>().sprite = MusicOff_Sprite;
-            _audioController.ToggleMute(false, "bg");
+            _audioController.ToggleMute(true, "bg");
             isMusic = false;
         }
         else
         {
             Music_Button.GetComponent<Image>().sprite = MusicOn_Sprite;
-            _audioController.ToggleMute(true, "bg");
+            _audioController.ToggleMute(false, "bg");
             isMusic = true;
         }
     }
@@ -411,15 +412,15 @@ public class UIManager : MonoBehaviour
         if (isSound)
         {
             Sound_Button.GetComponent<Image>().sprite = SoundOff_Sprite;
-            if (_audioController) _audioController.ToggleMute(false, "button");
-            if (_audioController) _audioController.ToggleMute(false, "wl");
+            if (_audioController) _audioController.ToggleMute(true, "button");
+            if (_audioController) _audioController.ToggleMute(true, "wl");
             isSound = false;
         }
         else
         {
             Sound_Button.GetComponent<Image>().sprite = SoundOn_Sprite;
-            if (_audioController) _audioController.ToggleMute(true, "button");
-            if (_audioController) _audioController.ToggleMute(true, "wl");
+            if (_audioController) _audioController.ToggleMute(false, "button");
+            if (_audioController) _audioController.ToggleMute(false, "wl");
             isSound = true;
         }
     }
