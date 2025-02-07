@@ -4,7 +4,6 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 using TMPro;
-using Best.SocketIO;
 
 public class SlotBehaviour : MonoBehaviour
 {
