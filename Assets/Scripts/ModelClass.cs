@@ -125,7 +125,7 @@ public class Symbol
 
     // This property will hold the properly deserialized list of lists of integers
     [JsonIgnore]
-    public List<List<int>> Multiplier { get; private set; }
+    public List<List<double>> Multiplier { get; private set; }
 
     // Custom deserialization method to handle the conversion
     [OnDeserialized]
@@ -134,12 +134,12 @@ public class Symbol
         // Handle the case where multiplier is an object (empty in JSON)
         if (MultiplierObject is JObject)
         {
-            Multiplier = new List<List<int>>();
+            Multiplier = new List<List<double>>();
         }
         else
         {
             // Deserialize normally assuming it's an array of arrays
-            Multiplier = JsonConvert.DeserializeObject<List<List<int>>>(MultiplierObject.ToString());
+            Multiplier = JsonConvert.DeserializeObject<List<List<double>>>(MultiplierObject.ToString());
         }
     }
     public object defaultAmount { get; set; }

@@ -42,6 +42,9 @@ public class SlotBehaviour : MonoBehaviour
     [SerializeField] private UIManager _uiManager;
     [SerializeField] private SocketIOManager _socketManager;
 
+    [Header("Auto spin setting")]
+    [SerializeField] private bool _wasAutoSpinOn;
+
     internal bool _isAutoSpin = false;
     internal bool _checkPopups = false;
 
@@ -59,12 +62,11 @@ public class SlotBehaviour : MonoBehaviour
     private int _betCounter = 0;
     private double _currentBalance = 0;
     private double _currentTotalBet = 0;
-    private int _lines = 20;
+    private int _lines = 1;
     private int _numberOfSlots = 5;          //number of columns
     private bool _stopSpinToggle;
     private float _spinDelay = 0.2f;
     private bool _isTurboOn;
-    private bool _wasAutoSpinOn;
     private bool _winningsAnimation = false;
 
     private void Start()
@@ -133,6 +135,9 @@ public class SlotBehaviour : MonoBehaviour
         if (_isAutoSpin)
         {
             _isAutoSpin = false;
+            if(!_isFreeSpin && _socketManager.resultData.freeSpin!=null && !_socketManager.resultData.freeSpin.isFreeSpin && _wasAutoSpinOn){
+                _wasAutoSpinOn = false;
+            }
             if (_autoSpinStopButton) _autoSpinStopButton.gameObject.SetActive(false);
             if (_autoSpinButton) _autoSpinButton.gameObject.SetActive(true);
             StartCoroutine(StopAutoSpinCoroutine());
@@ -197,10 +202,13 @@ public class SlotBehaviour : MonoBehaviour
             i++;
         }
         _uiManager.FreeSpinBoardToggle(false);
-        if (_wasAutoSpinOn)
+        if (_wasAutoSpinOn){
+            _wasAutoSpinOn=false;
             AutoSpin();
-        else
+        }
+        else{
             ToggleButtonGrp(true);
+        }
 
         _isFreeSpin = false;
     }
@@ -496,7 +504,7 @@ public class SlotBehaviour : MonoBehaviour
     internal void CheckWinPopups()
     {
         _checkPopups = true;
-        if (_socketManager.resultData.isDouble)
+        if (_socketManager.resultData.isDouble && _socketManager.playerdata.currentWining > 0)
         {
             _uiManager.PopulateWin(4, _socketManager.playerdata.currentWining);
         }

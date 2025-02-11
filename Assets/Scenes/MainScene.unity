@@ -7274,7 +7274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c6dee67c9fb64b7bbed44da112a7af7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _testToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NzkxOTI3OTgxYmU0MzlkMjkyYjg4OSIsInVzZXJuYW1lIjoiTWVodWwiLCJyb2xlIjoicGxheWVyIiwiaWF0IjoxNzM4NjQxMzM1LCJleHAiOjE3MzkyNDYxMzV9.llz7lk0ed0Ki63Nb8TN0wjCKrUZkPeXxsWOm-Zc2QH8
+  _testToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NDAwYjAwYjAxNmMwMDFhMGQ3MmQwYiIsInVzZXJuYW1lIjoic2F5YW4iLCJyb2xlIjoicGxheWVyIiwiaWF0IjoxNzM5MTY0MzI5LCJleHAiOjE3Mzk3NjkxMjl9.QwnxVkKCYUixvxasbbRMylEkA_HkvtrAY7Idqs0mT7s
   _slotBehaviour: {fileID: 2046803210}
   _uiManager: {fileID: 377874625}
 --- !u!1 &505297408
@@ -16348,7 +16348,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 77.89
   m_fontStyle: 1
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -19074,9 +19074,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1480051154}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 845, y: -756}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 845, y: -216}
   m_SizeDelta: {x: 138.44, y: 116.26001}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1368750698
@@ -20212,8 +20212,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -567.6, y: 95.19999}
-  m_SizeDelta: {x: 93, y: 36}
+  m_AnchoredPosition: {x: -582.5, y: 95.19999}
+  m_SizeDelta: {x: 133.29, y: 36}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1481742430
 MonoBehaviour:
@@ -20269,7 +20269,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 77.89
   m_fontStyle: 1
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
