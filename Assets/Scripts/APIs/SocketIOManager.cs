@@ -18,7 +18,6 @@ public class SocketIOManager : MonoBehaviour
     protected string TestSocketURI = "http://localhost:5001/";
     protected string gameID = "SL-LLL";
     // protected string gameID = "";
-
     private SocketManager manager;
     private const int maxReconnectionAttempts = 6;
     private readonly TimeSpan reconnectionDelay = TimeSpan.FromSeconds(10);
@@ -210,7 +209,7 @@ public class SocketIOManager : MonoBehaviour
         }
     }
 
-    internal void CloseSocket()
+    public void CloseSocket()
     {
         SendDataWithNamespace("EXIT");
     }
@@ -218,7 +217,7 @@ public class SocketIOManager : MonoBehaviour
     private void ParseResponse(string jsonObject)
     {
         Debug.Log(jsonObject);
-        Root myData = JsonConvert.DeserializeObject<Root>(jsonObject);
+        Root myData=JsonConvert.DeserializeObject<Root>(jsonObject);
 
         string id = myData.id;
 
@@ -276,7 +275,7 @@ public class SocketIOManager : MonoBehaviour
         message.data = new BetData();
         message.data.currentBet = currBet;
         message.data.spins = 1;
-        message.data.currentLines = 20;
+        message.data.currentLines = 1;
         message.id = "SPIN";
 
         string json = JsonConvert.SerializeObject(message); // Serialize message data to JSON

@@ -162,6 +162,7 @@ public class UIManager : MonoBehaviour
 
     private void SwitchPages(bool IncDec)
     {
+        _audioController.PlayButtonAudio();
         if (IncDec)
         {
             paytablePageCounter++;
@@ -393,15 +394,16 @@ public class UIManager : MonoBehaviour
 
     private void ToggleMusic()
     {
+        _audioController.PlayButtonAudio();
         if (isMusic)
         {
-            Music_Button.GetComponent<Image>().sprite = MusicOff_Sprite;
+            Music_Button.image.sprite = MusicOff_Sprite;
             _audioController.ToggleMute(true, "bg");
             isMusic = false;
         }
         else
         {
-            Music_Button.GetComponent<Image>().sprite = MusicOn_Sprite;
+            Music_Button.image.sprite = MusicOn_Sprite;
             _audioController.ToggleMute(false, "bg");
             isMusic = true;
         }
@@ -409,16 +411,17 @@ public class UIManager : MonoBehaviour
 
     private void ToggleSound()
     {
+        _audioController.PlayButtonAudio();
         if (isSound)
         {
-            Sound_Button.GetComponent<Image>().sprite = SoundOff_Sprite;
+            Sound_Button.image.sprite = SoundOff_Sprite;
             if (_audioController) _audioController.ToggleMute(true, "button");
             if (_audioController) _audioController.ToggleMute(true, "wl");
             isSound = false;
         }
         else
         {
-            Sound_Button.GetComponent<Image>().sprite = SoundOn_Sprite;
+            Sound_Button.image.sprite = SoundOn_Sprite;
             if (_audioController) _audioController.ToggleMute(false, "button");
             if (_audioController) _audioController.ToggleMute(false, "wl");
             isSound = true;
