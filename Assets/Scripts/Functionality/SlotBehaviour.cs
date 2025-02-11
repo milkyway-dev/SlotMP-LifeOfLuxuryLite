@@ -43,11 +43,11 @@ public class SlotBehaviour : MonoBehaviour
     [SerializeField] private SocketIOManager _socketManager;
 
     [Header("Auto spin setting")]
-    [SerializeField] private bool _wasAutoSpinOn;
 
     internal bool _isAutoSpin = false;
     internal bool _checkPopups = false;
 
+    private bool _wasAutoSpinOn;
     private List<Tween> _alltweens = new List<Tween>();
     private Coroutine _autoSpinRoutine = null;
     private Coroutine _freeSpinRoutine = null;
@@ -294,6 +294,7 @@ public class SlotBehaviour : MonoBehaviour
     //starts the spin process
     private void StartSlots(bool autoSpin = false)
     {
+        _totalWinText.text = "0.000";
         if (_spinButton) _spinButton.interactable = false;
         if (_audioController) _audioController.PlaySpinButtonAudio();
 
